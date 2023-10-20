@@ -1,6 +1,8 @@
 {
-  "SearchCriteria": "Software Development",
-  "JobId": "JobID123",
-  "NumCandidates": 5
+  "queryStringParameters" : {
+    "SearchCriteria": "Software Development",
+    "JobId": "45",
+    "NumCandidates": 5
+  }  
 }
 
