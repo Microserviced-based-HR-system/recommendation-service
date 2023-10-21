@@ -1,2 +1,4 @@
 requests
 scikit-learn
+boto3
+numpy

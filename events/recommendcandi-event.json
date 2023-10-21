@@ -2,7 +2,7 @@
   "queryStringParameters" : {
     "SearchCriteria": "Software Development",
     "JobId": "45",
-    "NumCandidates": 5
+    "NumOfCandidates": 5
   }  
 }
 
