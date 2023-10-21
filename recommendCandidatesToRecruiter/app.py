@@ -114,7 +114,11 @@ def recommend_candidates_to_recruiter(event, context):
     output_list.append(output_dict)
   
   # Return the output list as the API response
-  return output_list
+  return {
+    "statusCode": 200,
+    "message": "List of Recommended Candidates",
+    "body": output_list
+  }
 
 '''
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
