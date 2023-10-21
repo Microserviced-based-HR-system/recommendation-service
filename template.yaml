@@ -8,8 +8,8 @@ Description: >
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
-    Timeout: 3
-    MemorySize: 128
+    Timeout: 30
+    MemorySize: 512
 
 Resources:
   RecommendCandidatesToRecruiterFunction:
@@ -20,7 +20,7 @@ Resources:
       Runtime: python3.9
       Architectures:
         - x86_64
-      Timeout: 10
+      Timeout: 30
       Events:
         RecommendCandidatesToRecruiterApiEvent:
           Type: Api
@@ -36,6 +36,7 @@ Resources:
       Runtime: python3.9
       Architectures:
         - x86_64
+      Timeout: 30
       Events:
         RecommendJobsToCandidateApiEvent:
           Type: Api
@@ -61,11 +62,11 @@ Outputs:
 
   RecommendJobsToCandidateFunctionApiUrl:
     Description: "URL of the Recommend Jobs to Candidate API"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/recommendCandidatesToRecruiter/"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/recommendJobsToCandidate/"
   RecommendJobsToCandidateFunction:
     Description: "ARN of the Recommend Jobs to Candidate Lambda function"
-    Value: !GetAtt RecommendCandidatesToRecruiterFunction.Arn
+    Value: !GetAtt RecommendJobsToCandidateFunction.Arn
   RecommendJobsToCandidateFunctionIamRole:
     Description: "Implicit IAM Role created for RecommendJobsToCandidateFunction function"
-    Value: !GetAtt RecommendCandidatesToRecruiterFunctionRole.Arn
+    Value: !GetAtt RecommendJobsToCandidateFunctionRole.Arn
 

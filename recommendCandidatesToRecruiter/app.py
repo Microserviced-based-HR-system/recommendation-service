@@ -16,7 +16,7 @@ def recommend_candidates_to_recruiter(event, context):
   if search_criteria:
     job_description = search_criteria
     job_requirements = None
-    job_id = "srchId-" + str(random.randint(10**11, 10**12 - 1)) # Generate random 12-digit number and prefix with srchId-
+    job_id = "candidateSrchId-" + str(random.randint(10**11, 10**12 - 1)) # Generate random 12-digit number and prefix with srchId-
   
   # If Jobid argument is provided, retrieve the job data from Job Service API and use the description and job_type_id fields
   elif job_id:
