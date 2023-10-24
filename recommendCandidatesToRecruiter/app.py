@@ -66,7 +66,7 @@ def recommend_candidates_to_recruiter(event, context):
     }
 
 def get_job_service_url(job_id):
-    return 'https://80bulse5pl.execute-api.ap-southeast-1.amazonaws.com/Prod/jobDbDev/' + job_id
+    return 'http://job-service-32b5298bca7abe46.elb.ap-southeast-1.amazonaws.com/api/v1/jobs/' + job_id
 
 def get_job_description(job_service_url):
     api_response = requests.get(job_service_url)
@@ -78,11 +78,11 @@ def get_job_description(job_service_url):
         return None
 
 def get_candidate_service_url():
-    return 'https://ee7135fbd8a8437a81e0b3f04169e87c.us-central1.gcp.cloud.es.io:9243/candidate/_search'
+    return 'https://36528a98aae344c6a26756a47b7a8ee5.us-central1.gcp.cloud.es.io:9243/candidate/_search'
 
 def get_candidate_list(candidate_service_url):
     username = 'elastic'
-    password = '2Bk5hkN1NXCF3UWTJ05DkiAk'
+    password = 'dcAjK4RminkR6JSP3qPSLzHw'
     headers = {"Content-Type": "application/json"}
     body = {"query": { "match_all" : {} }, "_source" : [ "_id","name","email","mobileNo","workExperiences", "educationDetails","jobPreferences" ] }
     api_response = requests.post(candidate_service_url, auth=HTTPBasicAuth(username, password), headers=headers, json=body)
