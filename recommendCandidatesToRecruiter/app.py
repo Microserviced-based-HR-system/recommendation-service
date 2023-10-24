@@ -17,6 +17,14 @@ def recommend_candidates_to_recruiter(event, context):
     elif job_id:
         job_service_url = get_job_service_url(job_id)
         job_description = get_job_description(job_service_url)
+        if job_description is None:
+            return {
+                "statusCode": 500,
+                "body": json.dumps({
+                    "message": "JobId not found. Please provide a valid JobId as a input argument",
+                    "jost description": job_description,
+                }),
+            }        
 
     else:
         return {
@@ -36,7 +44,7 @@ def recommend_candidates_to_recruiter(event, context):
             }),
         }
     candidate_ids, candidate_name, candidate_email, candidate_mobileNo, candidate_data = get_candidate_ids_and_skills(candidate_list)
-    sorted_indices, sorted_candidate_ids, sorted_similarity_scores = get_sorted_indices_scores(candidate_ids, candidate_data, job_description)
+    sorted_indices, sorted_candidate_ids, sorted_similarity_scores = get_sorted_indices_scores(candidate_ids, candidate_data, job_description.replace(',', ' ').replace('"', ' ').replace('.', ' ').replace('{', ' ').replace('}', ' ').replace('[', ' ').replace(']', ' ').replace('(', ' ').replace(')', ' ').lower())
     sorted_candidate_name = [candidate_name[i] for i in sorted_indices]
     sorted_candidate_email = [candidate_email[i] for i in sorted_indices]
     sorted_candidate_mobileNo = [candidate_mobileNo[i] for i in sorted_indices]
@@ -72,7 +80,7 @@ def get_job_description(job_service_url):
     api_response = requests.get(job_service_url)
     if api_response.status_code == 200:
         api_output = api_response.json()
-        job_data = json.loads(api_output['data'])
+        job_data = api_output['data']
         return job_data['description'] + ' ' + job_data['requirements']
     else:
         return None
@@ -89,7 +97,7 @@ def get_candidate_list(candidate_service_url):
     if api_response.status_code == 200:
         api_output = api_response.json()['hits']['hits']
         api_data = []
-        api_data = [{"_id": candidate['_id'], "_name": candidate['_source']['name'], "_email": candidate['_source']['email'], "_mobileNo": candidate['_source']['mobileNo'], "_data": json.dumps(candidate['_source']).replace(',', ' ').replace('"', ' ').replace('.', ' ').replace('{', ' ').replace('}', ' ').replace('[', ' ').replace(']', ' ')} for candidate in api_output] 
+        api_data = [{"_id": candidate['_id'], "_name": candidate['_source']['name'], "_email": candidate['_source']['email'], "_mobileNo": candidate['_source']['mobileNo'], "_data": json.dumps(candidate['_source']).replace(',', ' ').replace('"', ' ').replace('.', ' ').replace('{', ' ').replace('}', ' ').replace('[', ' ').replace(']', ' ').replace('(', ' ').replace(')', ' ').lower()} for candidate in api_output] 
         return api_data
     else:
         return None
