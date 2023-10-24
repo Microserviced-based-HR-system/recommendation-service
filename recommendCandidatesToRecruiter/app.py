@@ -35,7 +35,6 @@ def recommend_candidates_to_recruiter(event, context):
                 "message": "Candidate List is empty. Please check Candidate Service API and API Output",
             }),
         }
-    #candidate_ids, candidate_data = get_candidate_ids_and_skills(candidate_list)
     candidate_ids, candidate_name, candidate_email, candidate_mobileNo, candidate_data = get_candidate_ids_and_skills(candidate_list)
     sorted_indices, sorted_candidate_ids, sorted_similarity_scores = get_sorted_indices_scores(candidate_ids, candidate_data, job_description)
     sorted_candidate_name = [candidate_name[i] for i in sorted_indices]
@@ -67,7 +66,6 @@ def recommend_candidates_to_recruiter(event, context):
     }
 
 def get_job_service_url(job_id):
-    # Replace with our actual job service URL
     return 'https://80bulse5pl.execute-api.ap-southeast-1.amazonaws.com/Prod/jobDbDev/' + job_id
 
 def get_job_description(job_service_url):
@@ -80,7 +78,6 @@ def get_job_description(job_service_url):
         return None
 
 def get_candidate_service_url():
-    # Replace with our actual candidate service URL
     return 'https://ee7135fbd8a8437a81e0b3f04169e87c.us-central1.gcp.cloud.es.io:9243/candidate/_search'
 
 def get_candidate_list(candidate_service_url):
@@ -99,7 +96,6 @@ def get_candidate_list(candidate_service_url):
 
 def get_candidate_ids_and_skills(candidate_list):
     candidate_ids = [candidate['_id'] for candidate in candidate_list]
-    #candidate_data = [" ".join(candidate['skills'] + [' ', candidate['education']]).replace(',', ' ') for candidate in candidate_list]
     candidate_name = [candidate['_name'] for candidate in candidate_list]
     candidate_email = [candidate['_email'] for candidate in candidate_list]
     candidate_mobileNo = [candidate['_mobileNo'] for candidate in candidate_list]
@@ -114,7 +110,7 @@ def get_sorted_indices_scores(candidate_ids, candidate_data, job_description):
                 score = len(set(job_description.split()) & set(candidate_skill.split())) / len(set(job_description.split()))
                 similarity_scores.append(score)
             else:
-                # Handle the case when 'candidate_skill' is None
+                # Handle the case when 'candidate_data' is None
                 similarity_scores.append(0)  # or any default value
     else:
         # Handle the case when 'job_description' is None
