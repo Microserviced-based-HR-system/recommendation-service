@@ -129,3 +129,4 @@ def get_sorted_indices_scores(candidate_ids, candidate_data, job_description):
     sorted_similarity_scores = [similarity_scores[i] for i in sorted_indices]
     return sorted_indices, sorted_candidate_ids, sorted_similarity_scores
 
+
